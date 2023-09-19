@@ -1,2 +1,3 @@
 # -zy_free
-周扬专属测试代码
+## 微信连发测试代码
+调用大佬框架：https://github.com/cluic/wxauto.git 感谢
