@@ -1,3 +1,9 @@
-# -zy_free
-## 微信连发测试代码
-调用大佬框架：https://github.com/cluic/wxauto.git 感谢
+## 微信接入星火大模型实例
+### 安装
+```
+pip install ntchat    
+```
+或者国内源安装
+```
+pip install -i https://pypi.tuna.tsinghua.edu.cn/simple ntchat   
+```
