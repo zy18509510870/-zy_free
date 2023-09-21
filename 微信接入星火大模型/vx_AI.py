@@ -1,8 +1,7 @@
+# -*- coding: utf-8 -*-
 import SparkApi
 import sys
 import ntchat
-
-# -*- coding: utf-8 -*-
 
 # 以下密钥信息从控制台获取
 appid = "fd727d01"  # 填写控制台中获取的 APPID 信息
@@ -18,8 +17,6 @@ Spark_url = "ws://spark-api.xf-yun.com/v2.1/chat"  # v2.0环境的地址
 
 text = []
 
-
-# length = 0
 
 def getText(role, content):
     jsoncon = {}
@@ -39,7 +36,7 @@ def getlength(text):
 
 
 def checklen(text):
-    while (getlength(text) > 8000):
+    while getlength(text) > 8000:
         del text[0]
     return text
 
@@ -49,6 +46,7 @@ wechat = ntchat.WeChat()
 # 打开pc微信, smart: 是否管理已经登录的微信
 wechat.open(smart=True)
 
+
 # 注册消息回调
 @wechat.msg_register(ntchat.MT_RECV_TEXT_MSG)
 def on_recv_text_msg(wechat_instance: ntchat.WeChat, message):
@@ -57,19 +55,17 @@ def on_recv_text_msg(wechat_instance: ntchat.WeChat, message):
     from_wxid = data["from_wxid"]
     self_wxid = wechat_instance.get_login_info()["wxid"]
     room_wxid = data["room_wxid"]
-
-
+    ccc = wechat_instance.get_rooms()
+    print('***********',ccc,'***********')
     # 判断消息不是自己发的，并回复对方
     if from_wxid != self_wxid and not room_wxid:
-    # if from_wxid != self_wxid and room_wxid =="18601263348@chatroom":
         question = checklen(getText("user", f"{data['msg']}"))
         SparkApi.answer = ""
         SparkApi.main(appid, api_key, api_secret, Spark_url, domain, question)
         shuchu = getText('assistant', SparkApi.answer)
-        print('**********,',shuchu,'**********')
+        # print('**********,', shuchu, '**********')
         shuchu = shuchu[-1]['content']
         wechat_instance.send_text(to_wxid=from_wxid, content=f"{shuchu}")
-
 
 try:
     while True:
